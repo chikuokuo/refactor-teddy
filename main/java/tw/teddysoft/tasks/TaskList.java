@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
-    private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
     private final TaskCollection taskCollection = new TaskCollection();
+    private final Map<String, List<Task>> tasks = taskCollection.GetTasks();
     private final BufferedReader in;
     private final PrintWriter out;
 
@@ -51,24 +50,12 @@ public final class TaskList implements Runnable {
         String[] commandRest = commandLine.split(" ", 2);
         String command = commandRest[0];
         switch (command) {
-            case "show":
-                show();
-                break;
-            case "add":
-                add(commandRest[1]);
-                break;
-            case "check":
-                check(commandRest[1]);
-                break;
-            case "uncheck":
-                uncheck(commandRest[1]);
-                break;
-            case "help":
-                help();
-                break;
-            default:
-                error(command);
-                break;
+            case "show" -> show();
+            case "add" -> add(commandRest[1]);
+            case "check" -> check(commandRest[1]);
+            case "uncheck" -> uncheck(commandRest[1]);
+            case "help" -> help();
+            default -> error(command);
         }
     }
 
@@ -94,7 +81,7 @@ public final class TaskList implements Runnable {
     }
 
     private void addProject(String name) {
-        tasks.put(name, new ArrayList<Task>());
+        tasks.put(name, new ArrayList<>());
     }
 
     private void addTask(String project, String description) {
