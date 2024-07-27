@@ -13,6 +13,7 @@ public final class TaskList implements Runnable {
     private static final String QUIT = "quit";
 
     private final Map<String, List<Task>> tasks = new LinkedHashMap<>();
+    private final TaskCollection taskCollection = new TaskCollection();
     private final BufferedReader in;
     private final PrintWriter out;
 
